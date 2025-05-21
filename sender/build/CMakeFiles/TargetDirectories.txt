@@ -1,0 +1,3 @@
+/sender/build/CMakeFiles/test_service.dir
+/sender/build/CMakeFiles/edit_cache.dir
+/sender/build/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 -DNDEBUG CMakeFiles/test_service.dir/src/test.cpp.o -o test_service  /usr/lib/x86_64-linux-gnu/libboost_system.so.1.74.0 -lpthread 
