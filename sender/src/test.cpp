@@ -35,20 +35,30 @@ int main() {
             on_message(&ws_client, hdl, msg);
         });
         ws_client.set_access_channels(websocketpp::log::alevel::none);
-        ws_client.set_error_channels(websocketpp::log::elevel::none);
+
+        ws_client.set_access_channels(websocketpp::log::alevel::connect |
+                            websocketpp::log::alevel::disconnect);
 
         std::string uri = get_server_uri();
         std::cout << "Connecting to: " << uri << std::endl;
 
         websocketpp::lib::error_code ec;
         auto connection = ws_client.get_connection(uri, ec);
+        //connection->append_header("Origin", "http://" + uri); // Some servers require this
 
+        ws_client.set_open_handshake_timeout(5000); // 5 seconds
         if (ec) {
             std::cerr << "Connection error: " << ec.message() << std::endl;
             return 1;
         }
 
+        websocketpp::lib::error_code connect_ec;
         ws_client.connect(connection);
+        if (connect_ec) {
+            std::cerr << "connect error: " << connect_ec.message() << std::endl;
+            return 1;
+        }
+        
         std::thread t([&ws_client]() { ws_client.run(); });
         
         

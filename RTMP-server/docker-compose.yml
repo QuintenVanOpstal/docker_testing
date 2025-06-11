@@ -1,0 +1,43 @@
+services:
+  # Standalone RTMP (no Tailscale)
+  nginx-rtmp:
+    image: tiangolo/nginx-rtmp:latest
+    ports:
+      - "1935:1935"  # Public port
+    profiles: ["standalone"]  # Optional: Only activate with --profile standalone
+
+  # Tailscale service (always available)
+  ts-rtmp:
+    image: tailscale/tailscale:latest
+    hostname: rtmp
+    environment:
+      - TS_AUTHKEY=${HEADSCALE_AUTHKEY}
+      - TS_USERSPACE=true
+      - TS_EXTRA_ARGS=--login-server=${HEADSCALE_TAILNET} --accept-routes --advertise-tags=${HEADSCALE_TAG} --accept-dns
+      - TS_DEBUG_TUN_NAME=ts-rtmp  # Unique interface name
+    network_mode: host
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    volumes:
+      - tailscale-rtmp:/var/lib/tailscale
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "tailscale", "status", "--active"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    profiles: ["tailscale"]
+
+  # Tailscale-compatible RTMP (no ports)
+  nginx-rtmp-tailscale:
+    image: tiangolo/nginx-rtmp:latest
+    network_mode: service:ts-rtmp  # Shares Tailscale's host network
+    depends_on:
+      ts-rtmp:
+        condition: service_healthy
+    profiles: ["tailscale"]  # Optional: Only activate with --profile tailscale
+
+volumes:
+  tailscale-rtmp:

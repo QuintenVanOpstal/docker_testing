@@ -1,0 +1,36 @@
+services:
+  video-processor:
+    depends_on:
+      ts-webcam:
+        condition: service_healthy
+    network_mode: service:ts-webcam
+
+  ts-webcam:
+    image: tailscale/tailscale:latest
+    hostname: webcam
+    environment:
+      - TS_AUTHKEY=${HEADSCALE_AUTHKEY}  # Use your Headscale pre-auth key
+      - TS_USERSPACE=true
+      - TS_EXTRA_ARGS=--login-server=${HEADSCALE_TAILNET} --accept-routes --advertise-tags=${HEADSCALE_TAG} --accept-dns
+      - TS_DEBUG_TUN_NAME=ts-webcam  # Unique interface name
+      - TS_NO_LOGS_NO_SUPPORT=true
+    network_mode: host
+    dns:
+      - 100.100.100.100
+    volumes:
+      - tailscale-webcam:/var/lib/tailscale
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    healthcheck:
+      test: ["CMD", "tailscale", "status", "--active"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+
+volumes:
+  tailscale-webcam:

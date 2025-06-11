@@ -1,0 +1,24 @@
+services:
+  stream-player:
+    build: .
+    container_name: ffplay-stream
+    network_mode: host
+    environment:
+      - DISPLAY=${DISPLAY:-:0}
+      - QT_X11_NO_MITSHM=1
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - ~/.Xauthority:/root/.Xauthority
+    command: [
+      "-fflags", "nobuffer+discardcorrupt",
+      "-flags", "low_delay",
+      "-framedrop",
+      "-probesize", "32",
+      "-analyzeduration", "0",
+      "-sync", "ext",
+      "-vf", "setpts=0",
+      "-rtmp_live", "live",
+      "-rtmp_buffer", "0",
+      "rtmp://${LOCATION_RTMP}:1935/live/stream"
+    ]
+    restart: unless-stopped

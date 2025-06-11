@@ -5,13 +5,14 @@ services:
       - .:/sender  # Mount current directory to /app in container
     working_dir: /sender
     # Optional environment variables
-    network_mode: service:ts-sender
+    network_mode: "service:ts-sender"
     environment:
       - CMAKE_BUILD_TYPE=Release
       - WS_SERVER_IP=${WS_SERVER_IP}
       - WS_SERVER_PORT=${WS_SERVER_PORT}
     depends_on:
-      - ts-sender
+      ts-sender:
+        condition: service_healthy
 
   ts-sender:
     image: tailscale/tailscale:latest
@@ -20,8 +21,8 @@ services:
       - TS_AUTHKEY=${HEADSCALE_AUTHKEY}  # Use your Headscale pre-auth key
       - TS_USERSPACE=false
         # - TS_TAILNET=${HEADSCALE_TAILNET}  # e.g., "https://your-headscale-server:8080"
-      - TS_EXTRA_ARGS=--login-server=${HEADSCALE_TAILNET} --accept-routes --advertise-tags=tag:sender
-      - TS_DEBUG_TUN_NAME=hs-sender  # Unique interface name
+      - TS_EXTRA_ARGS=--login-server=${HEADSCALE_TAILNET} --accept-routes --advertise-tags=tag:sender --accept-dns
+      - TS_DEBUG_TUN_NAME=ts-sender  # Unique interface name
     network_mode: host
     volumes:
       - tailscale-sender:/var/lib/tailscale
@@ -30,9 +31,12 @@ services:
     cap_add:
       - NET_ADMIN
       - NET_RAW
-        #sysctls:
-        #- net.ipv4.ip_forward=1
-        #- net.ipv6.conf.all.forwarding=1
+    healthcheck:
+      test: ["CMD", "tailscale", "status", "--active"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
     restart: unless-stopped
 
 volumes:

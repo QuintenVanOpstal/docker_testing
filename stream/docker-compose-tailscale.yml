@@ -1,0 +1,35 @@
+services:
+  stream-player:
+    depends_on:
+      ts-stream:
+        condition: service_healthy
+    network_mode: service:ts-stream
+
+  ts-stream:
+    image: tailscale/tailscale:latest
+    hostname: webcam
+    environment:
+      - TS_AUTHKEY=${HEADSCALE_AUTHKEY}  # Use your Headscale pre-auth key
+      - TS_USERSPACE=true
+      - TS_EXTRA_ARGS=--login-server=${HEADSCALE_TAILNET} --accept-routes --advertise-tags=${HEADSCALE_TAG}
+      - TS_DEBUG_TUN_NAME=ts-stream  # Unique interface name
+    network_mode: host
+    dns:
+      - 100.100.100.100
+    volumes:
+      - tailscale-stream:/var/lib/tailscale
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    healthcheck:
+      test: ["CMD", "tailscale", "status", "--active"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+
+volumes:
+  tailscale-stream:

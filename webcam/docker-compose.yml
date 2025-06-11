@@ -1,0 +1,36 @@
+services:
+  video-processor:
+    image: jrottenberg/ffmpeg:4.4-ubuntu
+    environment:
+      - INPUT_DEVICE=${INPUT_DEVICE:-/dev/video0}
+      - LOCATION_RTMP=${LOCATION_RTMP:-localhost}
+    # Conditional network configuration
+    network_mode: host
+    devices:
+      - "${INPUT_DEVICE:-/dev/video0}:${INPUT_DEVICE:-/dev/video0}"
+    privileged: true
+    command: [
+      #"ffmpeg",
+      "-f", "v4l2",
+      "-input_format", "mjpeg",
+      "-video_size", "1280x720",
+      "-framerate", "120",
+      "-i", "${INPUT_DEVICE}",
+      "-c:v", "libx264",
+      "-preset", "ultrafast",
+      "-tune", "zerolatency",
+      "-x264-params", "nal-hrd=cbr:force-cfr=1:keyint=120:min-keyint=120:no-scenecut=1:intra-refresh=1:bframes=0:ref=1",
+      "-b:v", "4000k",
+      "-minrate", "4000k",
+      "-maxrate", "4000k",
+      "-bufsize", "1k",
+      "-vsync", "passthrough",
+      "-copyts",
+      "-profile:v", "baseline",
+      "-level:v", "4.2",
+      "-pix_fmt", "yuv420p",
+      "-f", "flv",
+      "-flvflags", "no_duration_filesize",
+      "rtmp://${LOCATION_RTMP}:1935/live/stream"
+    ] 
+    restart:  unless-stopped
