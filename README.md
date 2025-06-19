@@ -88,6 +88,7 @@ To start ffplay (display the video)
 cd stream
 cp .env.default .env
 vim .env # change LOCATION_RTMP to the ip of the RTMP server
+xhost +local:docker
 docker compose -f docker-compose.yml up
 ```
 
@@ -135,6 +136,7 @@ vim .env # change LOCATION_RTMP to the ip of the RTMP server
     # change HEADSCALE_AUTHKEY to the authentication key of your headscale/tailscale instance
     # change HEADSCALE_TAILNET to the url of the headscale server
     # chanhe HEADSCALE_TAG to the tag coresponding to the headscale_authkey (tag:rtmp)
+xhost +local:docker
 docker compose -f docker-compose.yml -f docker-compose-tailscale.yml up
 ```
 
