@@ -1,3 +1,0 @@
-/reciever/build/CMakeFiles/test_reciever.dir
-/reciever/build/CMakeFiles/edit_cache.dir
-/reciever/build/CMakeFiles/rebuild_cache.dir
