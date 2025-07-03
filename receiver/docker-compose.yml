@@ -8,30 +8,4 @@ services:
     environment:
       - CMAKE_BUILD_TYPE=Release
     restart: unless-stopped
-    depends_on:
-      ts-receiver:
-        condition: service_healthy
-    network_mode: "service:ts-receiver"
-
-  ts-receiver:
-    image: tailscale/tailscale:latest
-    hostname: receiver
-    environment:
-      - TS_STATE_DIR=/var/lib/tailscale
-      - TS_AUTHKEY=${HEADSCALE_AUTHKEY}  # Use your Headscale pre-auth key
-        #- TS_TAILNET=${HEADSCALE_TAILNET}  # e.g., "https://your-headscale-server:8080"
-      - TS_EXTRA_ARGS=--login-server=${HEADSCALE_TAILNET} --advertise-tags=tag:receiver --accept-routes --accept-dns
-      - TS_DEBUG_TUN_NAME=ts-receiver  # Unique interface name
     network_mode: host
-    volumes:
-      - tailscale-receiver:/var/lib/tailscale
-    healthcheck:
-      test: ["CMD", "tailscale", "status", "--active"]
-      interval: 10s
-      timeout: 5s
-      retries: 3
-      start_period: 10s
-    restart: unless-stopped
-
-volumes:
-  tailscale-receiver:

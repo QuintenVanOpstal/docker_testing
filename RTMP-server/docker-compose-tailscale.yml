@@ -1,0 +1,34 @@
+services:
+  
+  nginx-rtmp:
+    image: tiangolo/nginx-rtmp:latest
+    network_mode: service:ts-rtmp
+    depends_on:
+      ts-rtmp:
+        condition: service_healthy
+    restart: unless-stopped
+  
+  ts-rtmp:
+    image: tailscale/tailscale:latest
+    hostname: rtmp
+    environment:
+      - TS_AUTHKEY=${HEADSCALE_AUTHKEY}
+      - TS_USERSPACE=true
+      - TS_EXTRA_ARGS=--login-server=${HEADSCALE_TAILNET} --advertise-tags=${HEADSCALE_TAG} --accept-routes --accept-dns
+      - TS_DEBUG_TUN_NAME=ts-rtmp  # Unique interface name
+    network_mode: host
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    volumes:
+      - tailscale-rtmp:/var/lib/tailscale
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "tailscale", "status", "--active"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  tailscale-rtmp:
