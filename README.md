@@ -39,9 +39,9 @@ With tailscale
 cd sender
 cp .env.default .env
 vim .env # Edit these values
-         # HEADSSCALE_TAILNET=http://your-headscale-ip:8080 (currently configured for a local container)
-         # HEADSCALE_AUTHKEY=your-sender-key
-         # HEADSCALE_TAG=tag:sender
+         # HEADSSCALE_TAILNET=http://your-headscale-ip:8080 (currently configured for a local container) (only if you want to use HEADSCALE)
+         # HEADSCALE_AUTHKEY=your-sender-key (only if you want to use HEADSCALE)
+         # HEADSCALE_TAG=tag:sender (only if you want to use HEADSCALE)
          # WS_SERVER_IP= Ip or domain name of the reciever
          # WS_SERVER_PORT = port that the websocket is listening to (5000)
 ```
@@ -57,6 +57,11 @@ With tailscale
 ```
 
 Now the sender wil send integers to a websocket running on the recieving side. The intiger gets printed.
+
+You can check if the reciever is working by executing:
+```bash
+docker logs --follow receiver-cmake-app-1
+```
 
 ### Shuting down
 press ctrl + c in both terminals
@@ -131,7 +136,6 @@ vim .env # change LOCATION_RTMP to the ip of the RTMP server
     # change HEADSCALE_AUTHKEY to the authentication key of your headscale/tailscale instance
     # change HEADSCALE_TAILNET to the url of the headscale server
     # chanhe HEADSCALE_TAG to the tag coresponding to the headscale_authkey (tag:rtmp)
-xhost +local:docker
 ./run.sh tailscale
 ```
 
