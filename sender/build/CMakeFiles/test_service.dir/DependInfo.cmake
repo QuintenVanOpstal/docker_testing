@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/sender/src/test.cpp" "CMakeFiles/test_service.dir/src/test.cpp.o" "gcc" "CMakeFiles/test_service.dir/src/test.cpp.o.d"
+  "/sender/src/test_udp.cpp" "CMakeFiles/test_service.dir/src/test_udp.cpp.o" "gcc" "CMakeFiles/test_service.dir/src/test_udp.cpp.o.d"
   )
 
 # Targets to which this target links.

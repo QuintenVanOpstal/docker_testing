@@ -69,28 +69,28 @@ include CMakeFiles/test_receiver.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/test_receiver.dir/flags.make
 
-CMakeFiles/test_receiver.dir/src/test.cpp.o: CMakeFiles/test_receiver.dir/flags.make
-CMakeFiles/test_receiver.dir/src/test.cpp.o: ../src/test.cpp
-CMakeFiles/test_receiver.dir/src/test.cpp.o: CMakeFiles/test_receiver.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/receiver/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/test_receiver.dir/src/test.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test_receiver.dir/src/test.cpp.o -MF CMakeFiles/test_receiver.dir/src/test.cpp.o.d -o CMakeFiles/test_receiver.dir/src/test.cpp.o -c /receiver/src/test.cpp
+CMakeFiles/test_receiver.dir/src/test_udp.cpp.o: CMakeFiles/test_receiver.dir/flags.make
+CMakeFiles/test_receiver.dir/src/test_udp.cpp.o: ../src/test_udp.cpp
+CMakeFiles/test_receiver.dir/src/test_udp.cpp.o: CMakeFiles/test_receiver.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/receiver/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/test_receiver.dir/src/test_udp.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test_receiver.dir/src/test_udp.cpp.o -MF CMakeFiles/test_receiver.dir/src/test_udp.cpp.o.d -o CMakeFiles/test_receiver.dir/src/test_udp.cpp.o -c /receiver/src/test_udp.cpp
 
-CMakeFiles/test_receiver.dir/src/test.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/test_receiver.dir/src/test.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /receiver/src/test.cpp > CMakeFiles/test_receiver.dir/src/test.cpp.i
+CMakeFiles/test_receiver.dir/src/test_udp.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/test_receiver.dir/src/test_udp.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /receiver/src/test_udp.cpp > CMakeFiles/test_receiver.dir/src/test_udp.cpp.i
 
-CMakeFiles/test_receiver.dir/src/test.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/test_receiver.dir/src/test.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /receiver/src/test.cpp -o CMakeFiles/test_receiver.dir/src/test.cpp.s
+CMakeFiles/test_receiver.dir/src/test_udp.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/test_receiver.dir/src/test_udp.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /receiver/src/test_udp.cpp -o CMakeFiles/test_receiver.dir/src/test_udp.cpp.s
 
 # Object files for target test_receiver
 test_receiver_OBJECTS = \
-"CMakeFiles/test_receiver.dir/src/test.cpp.o"
+"CMakeFiles/test_receiver.dir/src/test_udp.cpp.o"
 
 # External object files for target test_receiver
 test_receiver_EXTERNAL_OBJECTS =
 
-test_receiver: CMakeFiles/test_receiver.dir/src/test.cpp.o
+test_receiver: CMakeFiles/test_receiver.dir/src/test_udp.cpp.o
 test_receiver: CMakeFiles/test_receiver.dir/build.make
 test_receiver: /usr/lib/x86_64-linux-gnu/libboost_system.so.1.74.0
 test_receiver: CMakeFiles/test_receiver.dir/link.txt

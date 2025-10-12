@@ -129,29 +129,29 @@ test_service/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_service.dir/build.make CMakeFiles/test_service.dir/build
 .PHONY : test_service/fast
 
-src/test.o: src/test.cpp.o
-.PHONY : src/test.o
+src/test_udp.o: src/test_udp.cpp.o
+.PHONY : src/test_udp.o
 
 # target to build an object file
-src/test.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_service.dir/build.make CMakeFiles/test_service.dir/src/test.cpp.o
-.PHONY : src/test.cpp.o
+src/test_udp.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_service.dir/build.make CMakeFiles/test_service.dir/src/test_udp.cpp.o
+.PHONY : src/test_udp.cpp.o
 
-src/test.i: src/test.cpp.i
-.PHONY : src/test.i
+src/test_udp.i: src/test_udp.cpp.i
+.PHONY : src/test_udp.i
 
 # target to preprocess a source file
-src/test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_service.dir/build.make CMakeFiles/test_service.dir/src/test.cpp.i
-.PHONY : src/test.cpp.i
+src/test_udp.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_service.dir/build.make CMakeFiles/test_service.dir/src/test_udp.cpp.i
+.PHONY : src/test_udp.cpp.i
 
-src/test.s: src/test.cpp.s
-.PHONY : src/test.s
+src/test_udp.s: src/test_udp.cpp.s
+.PHONY : src/test_udp.s
 
 # target to generate assembly for a file
-src/test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_service.dir/build.make CMakeFiles/test_service.dir/src/test.cpp.s
-.PHONY : src/test.cpp.s
+src/test_udp.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_service.dir/build.make CMakeFiles/test_service.dir/src/test_udp.cpp.s
+.PHONY : src/test_udp.cpp.s
 
 # Help Target
 help:
@@ -162,9 +162,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... test_service"
-	@echo "... src/test.o"
-	@echo "... src/test.i"
-	@echo "... src/test.s"
+	@echo "... src/test_udp.o"
+	@echo "... src/test_udp.i"
+	@echo "... src/test_udp.s"
 .PHONY : help
 
 

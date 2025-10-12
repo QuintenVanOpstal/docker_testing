@@ -10,7 +10,7 @@ find_package(Boost REQUIRED COMPONENTS system)
 # Include websocketpp (header-only library)
 include_directories(/usr/include/websocketpp)
 
-add_executable(test_receiver src/test.cpp)
+add_executable(test_receiver src/test_udp.cpp)
 
 # Link Boost libraries
 target_link_libraries(test_receiver PRIVATE Boost::system)

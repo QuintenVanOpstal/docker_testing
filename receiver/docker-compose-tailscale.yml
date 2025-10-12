@@ -1,31 +1,48 @@
 services:
   cmake-app:
+    build: .
+    volumes:
+      - .:/receiver  # Mount current directory to /app in container
+    working_dir: /receiver
+    # Optional environment variables
+    restart: unless-stopped
     depends_on:
       ts-receiver:
         condition: service_healthy
     network_mode: service:ts-receiver
+    environment:
+      - ROLE=receiver
+      - CMAKE_BUILD_TYPE=Release
+      - WS_SERVER_PORT=${WS_SERVER_PORT}
 
   ts-receiver:
-    image: tailscale/tailscale:latest
-    hostname: receiver
-    environment:
-      - TS_STATE_DIR=/var/lib/tailscale
-      - TS_AUTHKEY=${HEADSCALE_AUTHKEY}  # Use your Headscale pre-auth key
-      - TS_EXTRA_ARGS=--login-server=${HEADSCALE_TAILNET} --advertise-tags=${HEADSCALE_TAG} --accept-routes --accept-dns
-      - TS_DEBUG_TUN_NAME=ts-receiver  # Unique interface name
-        #      - TS_USERSPACE=false 
-    network_mode: host
-      #    dns:
-      #100.100.100.100
-    volumes:
-      - tailscale-receiver:/var/lib/tailscale
-    healthcheck:
-      test: ["CMD", "tailscale", "status", "--active"]
-      interval: 10s
-      timeout: 5s
-      retries: 3
-      start_period: 10s
-    restart: unless-stopped
+      build:
+        context: .
+        dockerfile: tailscale.Dockerfile
+      hostname: receiver
+      network_mode: host
+      extra_hosts:
+      - "headscale.local:${HEADSCALE_TAILNET}"
+      environment:
+        #- TS_TAILSCALED_EXTRA_ARGS=--tun=tailscale-receiver --state=/var/lib/tailscale/tailscaled.state
+        - TS_AUTHKEY=${HEADSCALE_AUTHKEY}
+        - TS_EXTRA_ARGS=--login-server=https://headscale.local:443 --advertise-tags=${HEADSCALE_TAG} --accept-routes --accept-dns
+        - TS_USERSPACE=false
+      cap_add:
+        - NET_ADMIN
+        - NET_RAW
+      volumes:
+        - tailscale-receiver:/var/lib/tailscale
+      devices:
+        - /dev/net/tun:/dev/net/tun
+      healthcheck:
+        test: ["CMD", "tailscale", "status", "--active"]
+        interval: 10s
+        timeout: 5s
+        retries: 3
+        start_period: 10s
+
+      restart: unless-stopped
 
 volumes:
   tailscale-receiver:

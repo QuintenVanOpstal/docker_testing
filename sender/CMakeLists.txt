@@ -12,5 +12,5 @@ find_package(Boost REQUIRED COMPONENTS system)
 include_directories(/usr/include/websocketpp)
 
 # Create executable from src/test.cpp
-add_executable(test_service src/test.cpp)
+add_executable(test_service src/test_udp.cpp)
 target_link_libraries(test_service PRIVATE Boost::system pthread)

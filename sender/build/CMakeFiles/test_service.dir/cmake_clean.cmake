@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/test_service.dir/src/test.cpp.o"
-  "CMakeFiles/test_service.dir/src/test.cpp.o.d"
+  "CMakeFiles/test_service.dir/src/test_udp.cpp.o"
+  "CMakeFiles/test_service.dir/src/test_udp.cpp.o.d"
   "test_service"
   "test_service.pdb"
 )
