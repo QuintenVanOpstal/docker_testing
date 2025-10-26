@@ -10,7 +10,7 @@ cleanup() {
 trap cleanup SIGINT
 
 if [[ $1 == "tailscale" ]]; then
-  docker compose -f docker-compose.yml -f docker-compose-tailscale.yml up #-d
+  docker compose -f docker-compose.yml -f docker-compose-tailscale.yml up -d
 else
   docker compose up -d
 fi

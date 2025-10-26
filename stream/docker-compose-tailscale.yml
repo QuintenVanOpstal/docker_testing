@@ -6,14 +6,14 @@ services:
     network_mode: service:ts-stream
 
   ts-stream:
-    image: tailscale/tailscale:latest
+    build:
+      context: .
+      dockerfile: tailscale.Dockerfile
     hostname: webcam
+    network_mode: host
     environment:
       - TS_AUTHKEY=${HEADSCALE_AUTHKEY}  # Use your Headscale pre-auth key
-      - TS_USERSPACE=true
-      - TS_EXTRA_ARGS=--login-server=${HEADSCALE_TAILNET} --accept-routes --advertise-tags=${HEADSCALE_TAG}
-      - TS_DEBUG_TUN_NAME=ts-stream  # Unique interface name
-    network_mode: host
+      - TS_EXTRA_ARGS=--login-server=https://headscale.local:443 --advertise-tags=${HEADSCALE_TAG} --accept-routes --accept-dns
     dns:
       - 100.100.100.100
     volumes:

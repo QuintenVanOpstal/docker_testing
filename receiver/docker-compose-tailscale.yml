@@ -1,19 +1,11 @@
 services:
   cmake-app:
-    build: .
-    volumes:
-      - .:/receiver  # Mount current directory to /app in container
-    working_dir: /receiver
-    # Optional environment variables
-    restart: unless-stopped
     depends_on:
       ts-receiver:
         condition: service_healthy
     network_mode: service:ts-receiver
     environment:
       - ROLE=receiver
-      - CMAKE_BUILD_TYPE=Release
-      - WS_SERVER_PORT=${WS_SERVER_PORT}
 
   ts-receiver:
       build:
@@ -27,7 +19,7 @@ services:
         #- TS_TAILSCALED_EXTRA_ARGS=--tun=tailscale-receiver --state=/var/lib/tailscale/tailscaled.state
         - TS_AUTHKEY=${HEADSCALE_AUTHKEY}
         - TS_EXTRA_ARGS=--login-server=https://headscale.local:443 --advertise-tags=${HEADSCALE_TAG} --accept-routes --accept-dns
-        - TS_USERSPACE=false
+          #- TS_USERSPACE=false
       cap_add:
         - NET_ADMIN
         - NET_RAW

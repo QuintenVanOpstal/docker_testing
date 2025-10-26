@@ -9,20 +9,30 @@ And streaming a webcam to a RTMP-server
 - Docker
 - Headscale server (local or remote)
 
-## Running a websocket and sending data (via headscale)
+## Running a websocket and sending data or UDP communication (via headscale)
+
+To remove the certificates completly from the docker cache (necessary when a new cert is generated)
+execute:
+```bash
+docker rmi [container name]
+```
 
 ### 1. configure receiver
 
-This step is not necesaery if you don't want to run the setup in headscale
+This step is not necessary if you don't want to run the setup in headscale
 
 ```bash
 cd receiver
 cp .env.default .env
 vim .env # Edit these values
-         # HEADSSCALE_TAILNET=http://your-headscale-ip:8080 (currently configured for a local container)
+         # HEADSSCALE_TAILNET=your-headscale-ip (currently configured for a local container)
          # HEADSCALE_AUTHKEY=your-sender-key
          # HEADSCALE_TAG=tag:receiver
+         # WS_SERVER_PORT=8080
 ```
+
+If you want to run TCP communication, change add_executable(test_receiver src/test_udp.cpp) in the CmakeList.txt to:
+add_executable(test_receiver src/test.cpp) 
 
 ### 2. run the receiver
 Without tailscale
@@ -31,6 +41,7 @@ Without tailscale
 ```
 With tailscale
 ```bash
+./build.sh #copies the certificate from /usr/local/share/ca-certificates/ca.crt
 ./run.sh tailscale
 ```
 
@@ -43,7 +54,7 @@ vim .env # Edit these values
          # HEADSCALE_AUTHKEY=your-sender-key (only if you want to use HEADSCALE)
          # HEADSCALE_TAG=tag:sender (only if you want to use HEADSCALE)
          # WS_SERVER_IP= Ip or domain name of the reciever
-         # WS_SERVER_PORT = port that the websocket is listening to (5000)
+         # WS_SERVER_PORT = port that the UDP server is listening to (8080)
 ```
 
 ### 4. run the sender
@@ -53,10 +64,13 @@ Without tailscale
 ```
 With tailscale
 ```bash
+./build.sh #copies the certificate from /usr/local/share/ca-certificates/ca.crt
 ./run.sh tailscale
 ```
+If you want to run TCP communication, change add_executable(test_sender src/test_udp.cpp) in the CmakeList.txt to:
+add_executable(test_sender src/test.cpp) 
 
-Now the sender wil send integers to a websocket running on the recieving side. The intiger gets printed.
+Now the sender wil send integers to the recieving side. The integer gets printed.
 
 You can check if the reciever is working by executing:
 ```bash
@@ -67,6 +81,11 @@ docker logs --follow receiver-cmake-app-1
 press ctrl + c in both terminals
 
 ## Setting up the camera
+
+To remove the certificates completly from the docker cache (necessary when a new cert is generated)
+execute:
+```bash
+docker rmi [container name]
 
 This section is detecated to setting up a RTMP server, livestreaming to it. And looking at the live stream. THis with minimal delay.
 
@@ -86,6 +105,7 @@ cp .env.default .env
 vim .env # change HEADSCALE_AUTHKEY to the authentication key of your headscale/tailscale instance
     # change HEADSCALE_TAILNET to the url of the headscale server
     # chanhe HEADSCALE_TAG to the tag coresponding to the headscale_authkey (tag:rtmp)
+./build.sh #copies the certificate from /usr/local/share/ca-certificates/ca.crt
 ./run.sh tailscale
 ```
 
@@ -111,6 +131,7 @@ vim .env # change INPUT_DEVICE to your webcam
     # change HEADSCALE_AUTHKEY to the authentication key of your headscale/tailscale instance
     # change HEADSCALE_TAILNET to the url of the headscale server
     # chanhe HEADSCALE_TAG to the tag coresponding to the headscale_authkey (tag:rtmp)
+./build.sh #copies the certificate from /usr/local/share/ca-certificates/ca.crt
 ./run.sh tailscale
 ```
 
@@ -136,6 +157,8 @@ vim .env # change LOCATION_RTMP to the ip of the RTMP server
     # change HEADSCALE_AUTHKEY to the authentication key of your headscale/tailscale instance
     # change HEADSCALE_TAILNET to the url of the headscale server
     # chanhe HEADSCALE_TAG to the tag coresponding to the headscale_authkey (tag:rtmp)
+xhost +local:docker
+./build.sh #copies the certificate from /usr/local/share/ca-certificates/ca.crt
 ./run.sh tailscale
 ```
 
