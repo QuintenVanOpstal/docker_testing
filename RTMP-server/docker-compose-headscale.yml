@@ -12,10 +12,10 @@ services:
       context: .
       dockerfile: tailscale.Dockerfile
     hostname: rtmp
-    network_mode: tailscale-net
+    network_mode: host
     environment:
       - TS_AUTHKEY=${HEADSCALE_AUTHKEY}
-      - TS_EXTRA_ARGS=--accept-routes --accept-dns
+      - TS_EXTRA_ARGS=--login-server=https://headscale.local:443 --advertise-tags=${HEADSCALE_TAG} --accept-routes --accept-dns
     cap_add:
       - NET_ADMIN
       - NET_RAW

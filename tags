@@ -23,10 +23,10 @@ $(VERBOSE)MAKESILENT	sender/build/Makefile	/^$(VERBOSE)MAKESILENT = -s$/;"	m
 %	sender/build/Makefile	/^% : RCS\/%,v$/;"	t
 %	sender/build/Makefile	/^% : SCCS\/s.%$/;"	t
 %	sender/build/Makefile	/^% : s.%$/;"	t
-1. configure receiver	README.md	/^### 1. configure receiver$/;"	S	section:Headscale Sender-Reciever Project""Running a websocket and sending data (via headscale)
-2. run the receiver	README.md	/^### 2. run the receiver$/;"	S	section:Headscale Sender-Reciever Project""Running a websocket and sending data (via headscale)
-3. setup sender	README.md	/^### 3. setup sender$/;"	S	section:Headscale Sender-Reciever Project""Running a websocket and sending data (via headscale)
-4. run the sender	README.md	/^### 4. run the sender$/;"	S	section:Headscale Sender-Reciever Project""Running a websocket and sending data (via headscale)
+1. configure receiver	README.md	/^### 1. configure receiver$/;"	S	section:Headscale Sender-Reciever Project""Running a websocket and sending data or UDP communication (via headscale)
+2. run the receiver	README.md	/^### 2. run the receiver$/;"	S	section:Headscale Sender-Reciever Project""Running a websocket and sending data or UDP communication (via headscale)
+3. setup sender	README.md	/^### 3. setup sender$/;"	S	section:Headscale Sender-Reciever Project""Running a websocket and sending data or UDP communication (via headscale)
+4. run the sender	README.md	/^### 4. run the sender$/;"	S	section:Headscale Sender-Reciever Project""Running a websocket and sending data or UDP communication (via headscale)
 ARCHITECTURE_ID	receiver/build/CMakeFiles/3.22.1/CompilerIdC/CMakeCCompilerId.c	/^#   define ARCHITECTURE_ID /;"	d	file:
 ARCHITECTURE_ID	receiver/build/CMakeFiles/3.22.1/CompilerIdC/CMakeCCompilerId.c	/^#  define ARCHITECTURE_ID /;"	d	file:
 ARCHITECTURE_ID	receiver/build/CMakeFiles/3.22.1/CompilerIdC/CMakeCCompilerId.c	/^#  define ARCHITECTURE_ID$/;"	d	file:
@@ -439,7 +439,7 @@ PLATFORM_ID	sender/build/CMakeFiles/3.22.1/CompilerIdCXX/CMakeCXXCompilerId.cpp	
 Prerequisites	README.md	/^## Prerequisites$/;"	s	chapter:Headscale Sender-Reciever Project
 RM	receiver/build/Makefile	/^RM = \/usr\/bin\/cmake -E rm -f$/;"	m
 RM	sender/build/Makefile	/^RM = \/usr\/bin\/cmake -E rm -f$/;"	m
-Running a websocket and sending data (via headscale)	README.md	/^## Running a websocket and sending data (via headscale)$/;"	s	chapter:Headscale Sender-Reciever Project
+Running a websocket and sending data or UDP communication (via headscale)	README.md	/^## Running a websocket and sending data or UDP communication (via headscale)$/;"	s	chapter:Headscale Sender-Reciever Project
 SERIAL_PORT	reading_int/receiver.c	/^#define SERIAL_PORT /;"	d	file:
 SHELL	receiver/build/Makefile	/^SHELL = \/bin\/sh$/;"	m
 SHELL	sender/build/Makefile	/^SHELL = \/bin\/sh$/;"	m
@@ -484,7 +484,7 @@ STRINGIFY_HELPER	receiver/build/CMakeFiles/3.22.1/CompilerIdCXX/CMakeCXXCompiler
 STRINGIFY_HELPER	sender/build/CMakeFiles/3.22.1/CompilerIdC/CMakeCCompilerId.c	/^#define STRINGIFY_HELPER(/;"	d	file:
 STRINGIFY_HELPER	sender/build/CMakeFiles/3.22.1/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#define STRINGIFY_HELPER(/;"	d	file:
 Setting up the camera	README.md	/^## Setting up the camera$/;"	s	chapter:Headscale Sender-Reciever Project
-Shuting down	README.md	/^### Shuting down$/;"	S	section:Headscale Sender-Reciever Project""Running a websocket and sending data (via headscale)
+Shuting down	README.md	/^### Shuting down$/;"	S	section:Headscale Sender-Reciever Project""Running a websocket and sending data or UDP communication (via headscale)
 Starting ffmpeg	README.md	/^### Starting ffmpeg$/;"	S	section:Headscale Sender-Reciever Project""Setting up the camera
 Starting ffplay	README.md	/^### Starting ffplay$/;"	S	section:Headscale Sender-Reciever Project""Setting up the camera
 WebSocketServer	receiver/CMakeLists.txt	/^project(WebSocketServer)$/;"	p
@@ -619,7 +619,6 @@ src/test_udp.o	receiver/build/Makefile	/^src\/test_udp.o: src\/test_udp.cpp.o$/;
 src/test_udp.o	sender/build/Makefile	/^src\/test_udp.o: src\/test_udp.cpp.o$/;"	t
 src/test_udp.s	receiver/build/Makefile	/^src\/test_udp.s: src\/test_udp.cpp.s$/;"	t
 src/test_udp.s	sender/build/Makefile	/^src\/test_udp.s: src\/test_udp.cpp.s$/;"	t
-starting the RTMP server	README.md	/^### starting the RTMP server$/;"	S	section:Headscale Sender-Reciever Project""Setting up the camera
 test_receiver	receiver/CMakeLists.txt	/^add_executable(test_receiver src\/test_udp.cpp)$/;"	t
 test_receiver	receiver/build/Makefile	/^test_receiver: cmake_check_build_system$/;"	t
 test_receiver/fast	receiver/build/Makefile	/^test_receiver\/fast:$/;"	t

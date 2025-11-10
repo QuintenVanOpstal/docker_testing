@@ -1,23 +1,25 @@
 services:
-  stream-player:
+  video-processor:
     depends_on:
-      ts-stream:
+      ts-webcam:
         condition: service_healthy
-    network_mode: service:ts-stream
+    network_mode: service:ts-webcam
 
-  ts-stream:
+  ts-webcam:
     build:
       context: .
       dockerfile: tailscale.Dockerfile
     hostname: webcam
-    network_mode: tailscale-net
+    network_mode: host
+    extra_hosts:
+      - "headscale.local:${HEADSCALE_TAILNET}"
     environment:
       - TS_AUTHKEY=${HEADSCALE_AUTHKEY}  # Use your Headscale pre-auth key
-      - TS_EXTRA_ARGS=--accept-routes --accept-dns
+      - TS_EXTRA_ARGS=--login-server=https://headscale.local:443 --advertise-tags=${HEADSCALE_TAG} --accept-routes --accept-dns
     dns:
-      - 100.100.100.100
+      100.100.100.100
     volumes:
-      - tailscale-stream:/var/lib/tailscale
+      - tailscale-webcam:/var/lib/tailscale
     devices:
       - /dev/net/tun:/dev/net/tun
     cap_add:
@@ -32,4 +34,4 @@ services:
     restart: unless-stopped
 
 volumes:
-  tailscale-stream:
+  tailscale-webcam:
