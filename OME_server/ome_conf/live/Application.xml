@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Application>
+    <Name>live</Name>
+    <Type>live</Type>
+
+    <OutputProfiles>
+        <OutputProfile>
+            <Name>default</Name>
+            <Codec>
+                <Audio>opus</Audio>
+                <Video>h264</Video>
+            </Codec>
+        </OutputProfile>
+    </OutputProfiles>
+</Application>
+
