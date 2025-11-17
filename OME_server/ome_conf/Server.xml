@@ -1,0 +1,30 @@
+<Server version="1.0">
+  <Host>
+    <VirtualHost>
+      <Name>default</Name>
+
+      <Application>
+        <Name>live</Name>
+
+        <Provider>
+          <Stream>
+            <Type>RTMP</Type>
+            <Port>1935</Port>
+          </Stream>
+        </Provider>
+
+        <Publisher>
+          <Stream>
+            <Type>WebRTC</Type>
+            <Signalling>
+              <Port>3333</Port>
+            </Signalling>
+          </Stream>
+        </Publisher>
+
+      </Application>
+
+    </VirtualHost>
+  </Host>
+</Server>
+
