@@ -1,57 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Server version="1.0">
-
-    <!-- Required: Bind ports -->
+<Server version="8">
+    <Type>origin</Type>
+    <IP>*</IP>
     <Bind>
-        <Service>
-            <Interface>0.0.0.0</Interface>
-            <Port>3333</Port>
-            <Protocol>http</Protocol>
-        </Service>
+        <Providers>
+            <RTMP>
+                <Port>1935</Port>
+                <WorkerCount>1</WorkerCount>
+            </RTMP>
+            <WebRTC>
+                <Signalling>
+                    <Port>3333</Port>
+                    <TLSPort>3334</TLSPort>
+                    <WorkerCount>1</WorkerCount>
+                 </Signalling>
+
+                 <IceCandidates>
+                    <IceCandidate>*:10000/udp</IceCandidate>
+                    <!-- 
+                            If you want to stream WebRTC over TCP, specify IP:Port for TURN server.
+                            This uses the TURN protocol, which delivers the stream from the built-in TURN server to the player's TURN client over TCP. 
+                            For detailed information, refer https://airensoft.gitbook.io/ovenmediaengine/streaming/webrtc-publishing#webrtc-over-tcp
+                     -->
+                     <TcpRelay>*:3478</TcpRelay>
+                     <!-- TcpForce is an option to force the use of TCP rather than UDP in WebRTC streaming. (You can omit ?transport=tcp accordingly.) If <TcpRelay> is not set, playback may fail. -->
+                     <TcpForce>true</TcpForce>
+                     <TcpRelayWorkerCount>1</TcpRelayWorkerCount>
+                 </IceCandidates>
+            </WebRTC>
+        </Providers>
+        <Publishers>
+            <WebRTC>
+                <Signalling>
+                    <Port>3333</Port>
+                    <TLSPort>3334</TLSPort>
+                    <WorkerCount>1</WorkerCount>
+                </Signalling>
+                <IceCandidates>
+                    <IceCandidate>*:10000-10005/udp</IceCandidate>
+                    <!--
+                        If you want to stream WebRTC over TCP, specify IP:Port for TURN server.
+                        This uses the TURN protocol, which delivers the stream from the built-in TURN server to the player's TURN client over TCP.
+                        For detailed information, refer https://airensoft.gitbook.io/ovenmediaengine/streaming/webrtc-publishing#webrtc-over-tcp
+                    -->
+                    <TcpRelay>*:3478</TcpRelay>
+                    <!-- TcpForce is an option to force the use of TCP rather than UDP in WebRTC streaming. (You can omit ?transport=tcp accordingly.) If <TcpRelay> is not set, playback may fail. -->
+                    <TcpForce>true</TcpForce>
+                    <TcpRelayWorkerCount>1</TcpRelayWorkerCount>
+                </IceCandidates>
+            </WebRTC>
+        </Publishers>
     </Bind>
-
-    <!-- Required module section -->
-    <Modules>
-        <Module>
-            <Name>OriginModule</Name>
-        </Module>
-    </Modules>
-
-    <VirtualHosts>
-        <VirtualHost>
-            <Name>default</Name>
-
-            <Applications>
-                <Application>
-                    <Name>live</Name>
-
-                    <!-- Ingest RTMP -->
-                    <Providers>
-                        <Provider>
-                            <Name>rtmp_provider</Name>
-                            <Type>rtmp</Type>
-                            <Port>1935</Port>
-                        </Provider>
-                    </Providers>
-
-                    <!-- Publish WebRTC -->
-                    <Publishers>
-                        <Publisher>
-                            <Name>webrtc_publisher</Name>
-                            <Type>webrtc</Type>
-
-                            <Signalling>
-                                <Port>3333</Port>
-                            </Signalling>
-
-                        </Publisher>
-                    </Publishers>
-
-                </Application>
-            </Applications>
-
-        </VirtualHost>
-    </VirtualHosts>
-
 </Server>
 
