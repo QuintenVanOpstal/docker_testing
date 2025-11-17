@@ -1,30 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <Server version="1.0">
-  <Host>
-    <VirtualHost>
-      <Name>default</Name>
+    <VirtualHosts>
+        <VirtualHost>
+            <Name>default</Name>
 
-      <Application>
-        <Name>live</Name>
+            <Applications>
 
-        <Provider>
-          <Stream>
-            <Type>RTMP</Type>
-            <Port>1935</Port>
-          </Stream>
-        </Provider>
+                <Application>
+                    <Name>live</Name>
 
-        <Publisher>
-          <Stream>
-            <Type>WebRTC</Type>
-            <Signalling>
-              <Port>3333</Port>
-            </Signalling>
-          </Stream>
-        </Publisher>
+                    <!-- RTMP Ingest -->
+                    <Providers>
+                        <Provider>
+                            <Name>rtmp_provider</Name>
+                            <Type>rtmp</Type>
+                            <Port>1935</Port>
+                        </Provider>
+                    </Providers>
 
-      </Application>
+                    <!-- WebRTC Playback -->
+                    <Publishers>
+                        <Publisher>
+                            <Name>webrtc_publisher</Name>
+                            <Type>webrtc</Type>
 
-    </VirtualHost>
-  </Host>
+                            <Signalling>
+                                <Port>3333</Port>
+                            </Signalling>
+
+                        </Publisher>
+                    </Publishers>
+
+                </Application>
+
+            </Applications>
+
+        </VirtualHost>
+    </VirtualHosts>
 </Server>
 
