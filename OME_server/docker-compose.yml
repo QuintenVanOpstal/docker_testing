@@ -1,6 +1,10 @@
 services:
-  # Standalone RTMP (no Tailscale)
-  nginx-rtmp:
-    image: tiangolo/nginx-rtmp:latest
+  ome:
+    image: airensoft/ovenmediaengine:latest
     network_mode: host
     restart: unless-stopped
+    environment:
+      - OME_ORIGIN_PORT=3333
+      - OME_RTMP_PORT=1935
+    volumes:
+      - ./ome_conf:/opt/ovenmediaengine/bin/origin_conf  
