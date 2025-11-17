@@ -1,15 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Server version="1.0">
+
+    <!-- Required: Bind ports -->
+    <Bind>
+        <Service>
+            <Interface>0.0.0.0</Interface>
+            <Port>3333</Port>
+            <Protocol>http</Protocol>
+        </Service>
+    </Bind>
+
+    <!-- Required module section -->
+    <Modules>
+        <Module>
+            <Name>OriginModule</Name>
+        </Module>
+    </Modules>
+
     <VirtualHosts>
         <VirtualHost>
             <Name>default</Name>
 
             <Applications>
-
                 <Application>
                     <Name>live</Name>
 
-                    <!-- RTMP Ingest -->
+                    <!-- Ingest RTMP -->
                     <Providers>
                         <Provider>
                             <Name>rtmp_provider</Name>
@@ -18,7 +34,7 @@
                         </Provider>
                     </Providers>
 
-                    <!-- WebRTC Playback -->
+                    <!-- Publish WebRTC -->
                     <Publishers>
                         <Publisher>
                             <Name>webrtc_publisher</Name>
@@ -32,10 +48,10 @@
                     </Publishers>
 
                 </Application>
-
             </Applications>
 
         </VirtualHost>
     </VirtualHosts>
+
 </Server>
 
