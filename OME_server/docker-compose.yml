@@ -1,0 +1,6 @@
+services:
+  # Standalone RTMP (no Tailscale)
+  nginx-rtmp:
+    image: tiangolo/nginx-rtmp:latest
+    network_mode: host
+    restart: unless-stopped
